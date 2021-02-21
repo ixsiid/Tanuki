@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='utf-8' />
+	<title>狸が全財産を奪う</title>
+	<script>
+		window.addEventListener('load', () => {
+			let score = 0;
+			let high = 0;
+
+			const updateScore = s => {
+				console.log(score);
+				if (s === undefined) {
+					++score;
+				} else {
+					score = s;
+				}
+				document.querySelector('#score').textContent = score * 100;
+
+				if (score > high) {
+					high = score;
+					document.querySelector('#highscore').textContent = high * 100;
+				}
+			}
+
+			const tanuki = () => {
+				console.log('狸発生');
+				updateScore(0);
+				document.querySelector('#tanuki').style.display = 'block';
+				setTimeout(() => {
+				document.querySelector('#tanuki').style.display = 'none';}, 1050);
+			};
+
+			document.querySelector('#handred').addEventListener('click', () => {
+				updateScore();
+
+				if (Math.floor(Math.random() * 10) == 0) tanuki();
+			});
+
+			const handredRect = document.querySelector('#handred').getClientRects()[0];
+			const t = document.querySelector('#tanuki');
+			t.style.top = handredRect.top + 'px';
+			t.style.left = handredRect.left + 300 + 'px';
+		}, { once: true });
+	</script>
+	<style>
+		#tanuki {
+			width: 200px;
+			height: 300px;
+			background-color: brown;
+			position: absolute;
+			margin: 0;
+			display: none;
+			user-select: none;
+
+			animation: fadein 2s linear 0s 1 alternate none running;
+		}
+
+		@keyframes fadein {
+			0% {
+				left: 200px;
+			}
+
+			100% {
+				left: -700px;
+			}
+		}
+
+		#handred {
+			display: table-cell;
+			user-select: none;
+			cursor: pointer;
+			width: 300px;
+			height: 300px;
+			border-radius: 150px;
+			font-size: 40px;
+			background-color: lightgray;
+			border: 1px solid darkgray;
+			text-align: center;
+			vertical-align: middle;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>100円クリックするとたまに狸が全財産を奪うゲーム</h1>
+	<p>スコア <span id="score">0</span> 円</p>
+	<p>ハイスコア <span id="highscore">0</span> 円</p>
+	<p id="handred">100円</p>
+
+	<p id="tanuki">狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸狸</p>
+
+</body>
+
+</html>
